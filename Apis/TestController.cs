@@ -27,20 +27,9 @@ namespace TTCore.StoreProvider.Apis
         public async Task<IEnumerable<Request>> Get()
         {
             //var site = this.getSiteSetting();
-
-            _db.Add(new Request()
-            {
-                Id = _db.Requests.Count() + 1,
-                DT = DateTime.UtcNow,
-                MiddlewareActivation = "FactoryActivatedMiddleware",
-                Value = Guid.NewGuid().ToString()
-            });
-            await _db.SaveChangesAsync();
-
             List<Request> ls = await _db.Requests.ToListAsync();
             return ls;
         }
-
 
         [HttpGet("search/{keyword}")]
         public async Task<IEnumerable<Request>> FindByValue(string keyword)
@@ -56,6 +45,19 @@ namespace TTCore.StoreProvider.Apis
             return ls;
         }
 
-
+        [HttpGet("[action]")]
+        public async Task<Request> CreateRadomItem()
+        {
+            var item = new Request()
+            {
+                Id = _db.Requests.Count() + 1,
+                DT = DateTime.UtcNow,
+                MiddlewareActivation = "FactoryActivatedMiddleware",
+                Value = Guid.NewGuid().ToString()
+            };
+            _db.Add(item);
+            await _db.SaveChangesAsync();
+            return item;
+        }
     }
 }
