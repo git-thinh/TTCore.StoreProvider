@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Mascot.SharePoint.Service
+namespace TTCore.StoreProvider.Apis
 {
     [ApiController]
     [Route("api/[controller]")]

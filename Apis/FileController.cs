@@ -10,7 +10,7 @@ using TTCore.StoreProvider.Hubs;
 using TTCore.StoreProvider.Middleware;
 using TTCore.StoreProvider.Models;
 
-namespace Mascot.SharePoint.Service
+namespace TTCore.StoreProvider.Apis
 {
     [Route("api/[controller]")]
     public class FileController : Controller

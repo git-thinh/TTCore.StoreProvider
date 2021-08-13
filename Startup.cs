@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using TTCore.StoreProvider.Middleware;
 using TTCore.StoreProvider.Middleware.Extentions;
+using TTCore.StoreProvider.Services;
 
 namespace TTCore.StoreProvider
 {
@@ -25,16 +25,15 @@ namespace TTCore.StoreProvider
         {
             services.AddDbContext<DbMemoryContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
             services.AddTransient<FactoryActivatedMiddleware>();
+            services.AddSingleton<CacheMemoryRuntime>();
 
             services.AddCorsPolicyService();
             services.AddTransient<ValidateMimeMultipartContentFilter>();
 
-            //services.AddResponseCaching();
+            services.AddResponseCaching();
             services.AddDirectoryBrowser();
 
-            services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
-            services.AddRazorPages();
+            services.AddApiRazorMvcService();
 
             services.AddSignalRService();
         }
@@ -51,7 +50,7 @@ namespace TTCore.StoreProvider
             app.UseMiddleware<FactoryActivatedMiddleware>();
 
             app.UseCorsPolicyMiddleware();
-            //app.UseResponseCachingMiddleware();
+            app.UseResponseCachingMiddleware();
 
             app.UseStaticFileMiddleware(env);
 
@@ -62,8 +61,7 @@ namespace TTCore.StoreProvider
                 endpoints.MapSignalREndpointRoute();
                 endpoints.Test_POSTStreamPipe_MapEndpointRoute();
 
-                endpoints.MapControllers();
-                endpoints.MapRazorPages();
+                endpoints.MapApiRazorMvcMiddleware();
             });
         }
 

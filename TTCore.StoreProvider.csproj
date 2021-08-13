@@ -17,11 +17,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\CacheMemoryRuntime\Cache.cshtml" />
+    <None Include="Views\CacheMemoryRuntime\Callback.cshtml" />
+    <None Include="Views\CacheMemoryRuntime\CheckCancel.cshtml" />
+    <None Include="Views\CacheMemoryRuntime\Dependent.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
     <None Include="wwwroot\images\banner1.svg" />
     <None Include="wwwroot\images\banner2.svg" />
     <None Include="wwwroot\images\banner3.svg" />
