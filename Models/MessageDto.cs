@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TTCore.StoreProvider.Dtos
+namespace TTCore.StoreProvider.Models
 {
     public class MessageDto
     {

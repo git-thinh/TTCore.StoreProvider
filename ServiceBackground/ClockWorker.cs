@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TTCore.StoreProvider.Hubs;
 using TTCore.StoreProvider.Interfaces;
+using TTCore.StoreProvider.Models;
 
 namespace TTCore.StoreProvider.ServiceBackground
 {
@@ -26,7 +27,7 @@ namespace TTCore.StoreProvider.ServiceBackground
             {
                 //_logger.LogInformation("Worker running at: {Time}", DateTime.Now);
                 await _clockHub.Clients.All.ShowTime(DateTime.Now);
-                await _clockHub.Clients.All.Send(new Dtos.MessageDto() { Id = Guid.NewGuid() });
+                await _clockHub.Clients.All.Send(new MessageDto() { Id = Guid.NewGuid() });
                 await Task.Delay(3000);
             }
         }

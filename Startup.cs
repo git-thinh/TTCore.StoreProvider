@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 using TTCore.StoreProvider.Extentions;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace TTCore.StoreProvider
 {
@@ -31,7 +33,7 @@ namespace TTCore.StoreProvider
             services.AddCorsPolicyService();
             services.AddTransient<ValidateMimeMultipartContentFilter>();
 
-
+            //services.AddResponseCaching();
 
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
@@ -56,7 +58,7 @@ namespace TTCore.StoreProvider
             //--------------------------------------------------------
 
             //app.UseFileServer();
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
@@ -67,13 +69,27 @@ namespace TTCore.StoreProvider
             //--------------------------------------------------------
 
             app.UseCorsPolicyMiddleware();
+            
+            //app.UseResponseCaching();
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.GetTypedHeaders().CacheControl =
+            //        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+            //        {
+            //            Public = true,
+            //            MaxAge = TimeSpan.FromSeconds(10)
+            //        };
+            //    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary]
+            //        = new string[] { "Accept-Encoding" };
+
+            //    await next();
+            //});
 
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapSignalREndpointRoute();
-
                 endpoints.Test_POSTStreamPipe_MapEndpointRoute();
 
                 endpoints.MapControllers();

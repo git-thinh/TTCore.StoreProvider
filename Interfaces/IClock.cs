@@ -1,6 +1,6 @@
 ﻿﻿using System;
 using System.Threading.Tasks;
-using TTCore.StoreProvider.Dtos;
+using TTCore.StoreProvider.Models;
 
 namespace TTCore.StoreProvider.Interfaces
 {
