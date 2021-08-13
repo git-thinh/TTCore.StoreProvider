@@ -15,11 +15,11 @@ namespace Mascot.SharePoint.Service
     [Route("api/[controller]")]
     public class TestController : ControllerBase
     {
-        readonly AppDbContext _db;
+        readonly DbMemoryContext _db;
         readonly ILogger<TestController> _logger;
 
         public TestController(ILogger<TestController> logger,
-            AppDbContext db)
+            DbMemoryContext db)
         {
             _logger = logger;
             _db = db;

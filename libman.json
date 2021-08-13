@@ -3,8 +3,28 @@
   "defaultProvider": "unpkg",
   "libraries": [
     {
-      "library": "@microsoft/signalr@latest",
-      "destination": "wwwroot/js/signalr/"
+      "provider": "filesystem",
+      "library": "nodejs/node_modules/@microsoft/signalr/dist/browser/",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "signalr.min.js"
+      ]
+    },
+    {
+      "provider": "filesystem",
+      "library": "nodejs/node_modules/@microsoft/signalr-protocol-msgpack/dist/browser/",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "signalr-protocol-msgpack.min.js"
+      ]
+    },
+    {
+      "provider": "filesystem",
+      "library": "nodejs/node_modules/msgpack5/dist/",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "msgpack5.min.js"
+      ]
     }
   ]
 }

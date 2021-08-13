@@ -2,7 +2,11 @@
 Microsoft.AspNetCore.Mvc.RazorPages
 Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.InMemory
+
 Microsoft.AspNetCore.SignalR
+Microsoft.AspNetCore.SignalR.Redis
+Microsoft.AspNetCore.SignalR.StackExchangeRedis
+Microsoft.AspNetCore.SignalR.Protocols.MessagePack
 
 NLog
 NLog.Web.AspNetCore

@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using TTCore.StoreProvider.Interfaces;
+using TTCore.StoreProvider.Dtos;
 
 namespace TTCore.StoreProvider.Hubs
 {
@@ -10,7 +11,11 @@ namespace TTCore.StoreProvider.Hubs
         public async Task SendTimeToClients(DateTime dateTime)
         {
             await Clients.All.ShowTime(dateTime);
-            //await Clients.All.SendAsync("ReceiveMessage", DateTime.Now.ToString());
+        }
+
+        public async Task Send(MessageDto data)
+        {
+            await Clients.All.Send(data);
         }
     }
 }

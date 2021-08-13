@@ -13,13 +13,10 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipelines;
-using System.Net;
-using System.Net.WebSockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using TTCore.StoreProvider.Hubs;
-using TTCore.StoreProvider.ServiceBackground;
+using Microsoft.Extensions.FileProviders;
+using TTCore.StoreProvider.Extentions;
 
 namespace TTCore.StoreProvider
 {
@@ -35,92 +32,28 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
+            services.AddDbContext<DbMemoryContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
             services.AddTransient<FactoryActivatedMiddleware>();
 
-            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
-            {
-                builder.AllowAnyMethod().AllowAnyHeader()
-                       .WithOrigins("http://localhost:44317")
-                       .AllowCredentials();
-            }));
+            services.AddCorsPolicyService();
+            services.AddTransient<ValidateMimeMultipartContentFilter>();
+
+
 
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
             services.AddRazorPages();
 
-            services.AddSignalR();
-            services.AddHostedService<ClockWorker>();
+            services.AddSignalRService();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseWebsocketMiddleware();
 
-            #region WebSockets
-
-            //var webSocketOptions = new WebSocketOptions()
-            //{
-            //    KeepAliveInterval = TimeSpan.FromSeconds(120),
-            //};
-            //webSocketOptions.AllowedOrigins.Add("https://client.com");
-            //webSocketOptions.AllowedOrigins.Add("https://www.client.com");
-            app.UseWebSockets(new WebSocketOptions());
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Path == "/ws")
-                {
-                    if (context.WebSockets.IsWebSocketRequest)
-                    {
-                        using (WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync())
-                        {
-                            await WebSocketEcho(context, webSocket);
-                        }
-                    }
-                    else
-                    {
-                        context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    }
-                }
-                else
-                {
-                    await next();
-                }
-            });
-
-            //app.Use(async (context, next) =>
-            //{
-            //    if (context.Request.Path == "/ws-background")
-            //    {
-            //        if (context.WebSockets.IsWebSocketRequest)
-            //        {
-            //            using (WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync())
-            //            {
-            //                var socketFinishedTcs = new TaskCompletionSource<object>();
-            //                BackgroundSocketProcessor.AddSocket(webSocket, socketFinishedTcs);
-            //                await socketFinishedTcs.Task;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        await next();
-            //    }
-            //});
-
-            #endregion
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIT.UI.Api v1"));
-
-            //--------------------------------------------------------
 
             //--------------------------------------------------------
 
@@ -129,25 +62,25 @@ namespace TTCore.StoreProvider
 
             //--------------------------------------------------------
 
-            app.UseStaticFiles();
             //app.UseFileServer();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "test")),
+                RequestPath = "/test"
+            });
+
             //--------------------------------------------------------
 
             app.UseRouting();
 
-            app.UseCors("CorsPolicy");
-            //// Global cors policy
-            //app.UseCors(x => x
-            //    .AllowAnyOrigin()
-            //    .AllowAnyMethod()
-            //    .AllowAnyHeader());
-
+            app.UseCorsPolicyMiddleware();
 
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/chatHub");
-                endpoints.MapHub<ClockHub>("/hubs/clock");
+                endpoints.MapSignalREndpointRoute();
 
                 #region POST Stream Pipe
 
@@ -184,28 +117,10 @@ namespace TTCore.StoreProvider
 
                 #endregion
 
-
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
         }
-
-        #region WebSocket Echo
-
-        private async Task WebSocketEcho(HttpContext context, WebSocket webSocket)
-        {
-            var buffer = new byte[1024 * 4];
-            WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            while (!result.CloseStatus.HasValue)
-            {
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, CancellationToken.None);
-
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            }
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        }
-
-        #endregion
 
         #region GetListOfStringsFromStream
 
@@ -356,11 +271,4 @@ namespace TTCore.StoreProvider
         #endregion
     }
 
-    internal class BackgroundSocketProcessor
-    {
-        internal static void AddSocket(WebSocket socket, TaskCompletionSource<object> socketFinishedTcs)
-        {
-            //throw new NotImplementedException();
-        }
-    }
 }

@@ -25,9 +25,9 @@ namespace TTCore.StoreProvider.ServiceBackground
             while (!stoppingToken.IsCancellationRequested)
             {
                 //_logger.LogInformation("Worker running at: {Time}", DateTime.Now);
-                //await _clockHub.Clients.All.SendAsync("ReceiveMessage", DateTime.Now.ToString());
                 await _clockHub.Clients.All.ShowTime(DateTime.Now);
-                await Task.Delay(1000);
+                await _clockHub.Clients.All.Send(new Dtos.MessageDto() { Id = Guid.NewGuid() });
+                await Task.Delay(3000);
             }
         }
     }

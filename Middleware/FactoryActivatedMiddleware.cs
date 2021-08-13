@@ -8,9 +8,9 @@ namespace TTCore.StoreProvider.Middleware
 {
     public class FactoryActivatedMiddleware : IMiddleware
     {
-        private readonly AppDbContext _db;
+        private readonly DbMemoryContext _db;
 
-        public FactoryActivatedMiddleware(AppDbContext db)
+        public FactoryActivatedMiddleware(DbMemoryContext db)
         {
             _db = db;
         }
@@ -20,14 +20,14 @@ namespace TTCore.StoreProvider.Middleware
             //var keyValue = context.Request.Query["key"];
             //if (!string.IsNullOrWhiteSpace(keyValue))
             {
-                _db.Add(new Request()
-                    {
-                        DT = DateTime.UtcNow, 
-                        MiddlewareActivation = "FactoryActivatedMiddleware", 
-                        Value = Guid.NewGuid().ToString()
-                    });
+                //_db.Add(new Request()
+                //    {
+                //        DT = DateTime.UtcNow, 
+                //        MiddlewareActivation = "FactoryActivatedMiddleware", 
+                //        Value = Guid.NewGuid().ToString()
+                //    });
 
-                await _db.SaveChangesAsync();
+                //await _db.SaveChangesAsync();
             }
 
             await next(context);

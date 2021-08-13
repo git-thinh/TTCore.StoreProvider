@@ -9,9 +9,9 @@ namespace TTCore.StoreProvider.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly AppDbContext _db;
+        private readonly DbMemoryContext _db;
 
-        public IndexModel(AppDbContext db)
+        public IndexModel(DbMemoryContext db)
         {
             _db = db;
         }
