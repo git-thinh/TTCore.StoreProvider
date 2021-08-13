@@ -23,7 +23,9 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DbMemoryContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
+            services.AddDbContext<DbMemoryContext>(options => options.UseInMemoryDatabase("DbRamEntity"));
+            services.AddDbContext<DbUserContext>(options => options.UseInMemoryDatabase("DbRamUser"));
+
             services.AddTransient<FactoryActivatedMiddleware>();
             services.AddSingleton<CacheMemoryRuntime>();
 
@@ -43,6 +45,8 @@ namespace TTCore.StoreProvider
             app.UseWebsocketMiddleware();
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            //app.UseExceptionHandler("/Home/Error");
+
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIT.UI.Api v1"));
 

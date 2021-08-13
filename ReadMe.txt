@@ -15,6 +15,7 @@ StackExchange.Redis
 
 Swashbuckle.AspNetCore.SwaggerGen
 Swashbuckle.AspNetCore.SwaggerUI
+Microsoft.Docs.Samples.RouteInfo
 
 ---------------------------------------------
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
 /*
@@ -30,23 +31,29 @@ To test caching behavior:
  
  */
 
-namespace TTCore.StoreProvider.Middleware.Extentions
+namespace TTCore.StoreProvider.Middleware
 {
-    public static class ResponseCachingExtention
+    public static class ResponseCachingMiddleware
     {
+        public static void SetMvcResponseCaching(this MvcOptions options,int secondDuration = 30) {
+            //options.CacheProfiles.Add("Default30", new CacheProfile() { Duration = secondDuration });
+        }
+
         public static void UseResponseCachingMiddleware(this IApplicationBuilder app)
         {
             app.UseResponseCaching();
             app.Use(async (context, next) =>
             {
-                context.Response.GetTypedHeaders().CacheControl =
-                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
-                    {
-                        Public = true,
-                        MaxAge = TimeSpan.FromSeconds(10)
-                    };
-                context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary]
-                    = new string[] { "Accept-Encoding" };
+                // Set Response Caching for API, Mvc Controller
+
+                //context.Response.GetTypedHeaders().CacheControl =
+                //    new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+                //    {
+                //        Public = true,
+                //        MaxAge = TimeSpan.FromSeconds(10)
+                //    };
+                //context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary]
+                //    = new string[] { "Accept-Encoding" };
 
                 await next();
             });

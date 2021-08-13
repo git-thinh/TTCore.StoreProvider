@@ -5,8 +5,9 @@ namespace TTCore.StoreProvider.Data
 {
     public class DbMemoryContext : DbContext
     {
-        public DbMemoryContext(DbContextOptions options) : base(options) { }
+        public DbMemoryContext(DbContextOptions<DbMemoryContext> options) : base(options) { }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<MessageDto> Messages { get; set; }
     }
 }

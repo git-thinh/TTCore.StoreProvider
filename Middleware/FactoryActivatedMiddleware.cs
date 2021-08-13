@@ -9,10 +9,12 @@ namespace TTCore.StoreProvider.Middleware
     public class FactoryActivatedMiddleware : IMiddleware
     {
         private readonly DbMemoryContext _db;
+        private readonly DbUserContext _dbUser;
 
-        public FactoryActivatedMiddleware(DbMemoryContext db)
+        public FactoryActivatedMiddleware(DbMemoryContext db, DbUserContext dbUser)
         {
             _db = db;
+            _dbUser = dbUser;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)

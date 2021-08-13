@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net;
 
-namespace TTCore.StoreProvider
+namespace TTCore.StoreProvider.Helpers
 {
     public class SPHelper
     {

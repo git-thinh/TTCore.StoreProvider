@@ -12,7 +12,7 @@ using TTCore.StoreProvider.Models;
 
 namespace TTCore.StoreProvider.Apis
 {
-    [Route("api/[controller]")]
+    [ApiRouteBase]
     public class FileController : Controller
     {
         readonly IHubContext<ImageMessageHub> _hubContext;
