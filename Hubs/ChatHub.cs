@@ -9,7 +9,7 @@ namespace TTCore.StoreProvider.Hubs
     {
         public async Task SendMessage(string user, string message)
         {
-            await Clients.All.SendAsync("CHANNEL_MESSAGE", user, message);
+            await Clients.All.SendAsync("CHAT_MESSAGE", user, message);
         }
     }
 }

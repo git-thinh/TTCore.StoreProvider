@@ -5,7 +5,7 @@ using TTCore.StoreProvider.Models;
 
 namespace TTCore.StoreProvider.Hubs
 {
-    public class ImagesMessageHub : Hub
+    public class ImageMessageHub : Hub
     {
         public Task ImageMessage(ImageMessage file)
         {

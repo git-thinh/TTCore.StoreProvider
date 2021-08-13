@@ -38,7 +38,6 @@
     <script src="/lib/signalr-protocol-msgpack.min.js"></script>
 
     <script type="text/javascript">
-        //var connection = new signalR.HubConnectionBuilder().withUrl("/hubs/loopymessage").build();
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("/hubs/chat")
             .withHubProtocol(new signalR.protocols.msgpack.MessagePackHubProtocol())
@@ -47,7 +46,7 @@
         //Disable send button until connection is established
         document.getElementById("sendButton").disabled = true;
 
-        connection.on("ReceiveMessage", function (user, message) {
+        connection.on("CHANNEL_MESSAGE", function (user, message) {
             console.log(user, message);
 
             var li = document.createElement("li");

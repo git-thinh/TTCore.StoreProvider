@@ -6,8 +6,8 @@ namespace TTCore.StoreProvider.Models
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Username { get; set; }
 
-        public int Amount { get; set; }
+        public string Text { get; set; }
     }
 }

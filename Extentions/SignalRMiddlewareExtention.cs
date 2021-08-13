@@ -28,8 +28,7 @@ namespace TTCore.StoreProvider.Extentions
         {
             endpoints.MapHub<ChatHub>("/hubs/chat");
             endpoints.MapHub<ClockHub>("/hubs/clock");
-            endpoints.MapHub<MsgPackHub>("/hubs/msgpack");
-            endpoints.MapHub<ImagesMessageHub>("/hubs/image");
+            endpoints.MapHub<ImageMessageHub>("/hubs/image");
         }
     }
 }

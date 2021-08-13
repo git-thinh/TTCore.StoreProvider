@@ -15,9 +15,9 @@ namespace Mascot.SharePoint.Service
     [Route("api/[controller]")]
     public class FileController : Controller
     {
-        private readonly IHubContext<ImagesMessageHub> _hubContext;
+        readonly IHubContext<ImageMessageHub> _hubContext;
 
-        public FileController(IHubContext<ImagesMessageHub> hubContext)
+        public FileController(IHubContext<ImageMessageHub> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -25,11 +25,14 @@ namespace Mascot.SharePoint.Service
         [Route("upload")]
         [HttpPost]
         [ServiceFilter(typeof(ValidateMimeMultipartContentFilter))]
-        public async Task<IActionResult> UploadFiles(List<IFormFile> files)
+        public async Task<dynamic> UploadFiles(List<IFormFile> files)
         {
+            if (files == null) files = new List<IFormFile>();
             var files2 = HttpContext.Request.Form.Files;
+            if (files.Count == 0 && files2 != null && files2.Count > 0)
+                foreach (var file in files2) files.Add(file);
 
-            if (ModelState.IsValid && files != null && files.Count > 0)
+            if (files.Count > 0)
             {
                 foreach (var file in files)
                 {
@@ -51,7 +54,7 @@ namespace Mascot.SharePoint.Service
                 }
             }
 
-            return Redirect("/test/upload.html");
+            return new { Ok = true, Count = files.Count };
         }
     }
 }

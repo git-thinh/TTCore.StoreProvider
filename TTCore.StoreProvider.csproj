@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\FileDescriptionShort.cs" />
     <Compile Remove="ServiceBackground\RedisNotificationBroker.cs" />
     <Compile Remove="SP\CamlHelper.cs" />
     <Compile Remove="SP\DataBaseSP.cs" />
