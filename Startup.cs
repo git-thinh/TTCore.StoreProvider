@@ -1,5 +1,4 @@
 using TTCore.StoreProvider.Data;
-using TTCore.StoreProvider.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.IO;
-using Microsoft.Extensions.FileProviders;
-using TTCore.StoreProvider.Extentions;
-using Microsoft.AspNetCore.Http;
-using System;
+using TTCore.StoreProvider.Middleware;
+using TTCore.StoreProvider.Middleware.Extentions;
 
 namespace TTCore.StoreProvider
 {
@@ -34,6 +30,7 @@ namespace TTCore.StoreProvider
             services.AddTransient<ValidateMimeMultipartContentFilter>();
 
             //services.AddResponseCaching();
+            services.AddDirectoryBrowser();
 
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
@@ -50,40 +47,13 @@ namespace TTCore.StoreProvider
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIT.UI.Api v1"));
 
-            //--------------------------------------------------------
-
             app.UseMiddleware<RequestCultureMiddleware>();
             app.UseMiddleware<FactoryActivatedMiddleware>();
 
-            //--------------------------------------------------------
-
-            //app.UseFileServer();
-            //app.UseDefaultFiles();
-            app.UseStaticFiles();
-            app.UseDirectoryBrowser(new DirectoryBrowserOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "test")),
-                RequestPath = "/test"
-            });
-
-            //--------------------------------------------------------
-
             app.UseCorsPolicyMiddleware();
-            
-            //app.UseResponseCaching();
-            //app.Use(async (context, next) =>
-            //{
-            //    context.Response.GetTypedHeaders().CacheControl =
-            //        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
-            //        {
-            //            Public = true,
-            //            MaxAge = TimeSpan.FromSeconds(10)
-            //        };
-            //    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary]
-            //        = new string[] { "Accept-Encoding" };
+            //app.UseResponseCachingMiddleware();
 
-            //    await next();
-            //});
+            app.UseStaticFileMiddleware(env);
 
             app.UseRouting();
             app.UseAuthorization();

@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TTCore.StoreProvider.Extentions
+namespace TTCore.StoreProvider.Middleware.Extentions
 {
     public static class WebsocketExtention
     {

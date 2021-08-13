@@ -9,7 +9,7 @@ using System.IO.Pipelines;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTCore.StoreProvider.Extentions
+namespace TTCore.StoreProvider.Middleware.Extentions
 {
     public static class Test_POSTStreamPipeExtention
     {

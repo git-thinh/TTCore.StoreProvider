@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TTCore.StoreProvider.Extentions
+namespace TTCore.StoreProvider.Middleware.Extentions
 {
     public static class CorsMiddlewareExtention
     {

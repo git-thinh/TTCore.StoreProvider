@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TTCore.StoreProvider.Hubs;
 using TTCore.StoreProvider.ServiceBackground;
 
-namespace TTCore.StoreProvider.Extentions
+namespace TTCore.StoreProvider.Middleware.Extentions
 {
     public static class SignalRMiddlewareExtention
     {
