@@ -13,27 +13,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="nodejs\package-lock.json" />
+    <Folder Include="wwwroot\dist\" />
+    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\CacheMemoryRuntime\Cache.cshtml" />
-    <None Include="Views\CacheMemoryRuntime\Callback.cshtml" />
-    <None Include="Views\CacheMemoryRuntime\CheckCancel.cshtml" />
-    <None Include="Views\CacheMemoryRuntime\Dependent.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\_ViewImports.cshtml" />
-    <None Include="Views\_ViewStart.cshtml" />
+    <None Include="Views.bak\CacheMemoryRuntime\Cache.cshtml" />
+    <None Include="Views.bak\CacheMemoryRuntime\Callback.cshtml" />
+    <None Include="Views.bak\CacheMemoryRuntime\CheckCancel.cshtml" />
+    <None Include="Views.bak\CacheMemoryRuntime\Dependent.cshtml" />
+    <None Include="Views.bak\Shared\_Layout.cshtml" />
+    <None Include="Views.bak\_ViewImports.cshtml" />
+    <None Include="Views.bak\_ViewStart.cshtml" />
     <None Include="wwwroot\images\banner1.svg" />
     <None Include="wwwroot\images\banner2.svg" />
     <None Include="wwwroot\images\banner3.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.313" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />

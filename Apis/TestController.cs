@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Docs.Samples;
 
 namespace TTCore.StoreProvider.Apis
 {
@@ -59,5 +60,18 @@ namespace TTCore.StoreProvider.Apis
             await _db.SaveChangesAsync();
             return item;
         }
+
+        [HttpGet("{id:customName}")]
+        public IActionResult Get(string id)
+        {
+            return ControllerContext.MyDisplayRouteInfo(id);
+        }
+
+        [HttpGet("my/{id:customName}")]
+        public IActionResult Get(int id)
+        {
+            return ControllerContext.MyDisplayRouteInfo(id);
+        }
+
     }
 }

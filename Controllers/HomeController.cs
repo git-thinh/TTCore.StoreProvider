@@ -3,6 +3,17 @@ using Microsoft.Docs.Samples;
 
 namespace TTCore.StoreProvider.Controllers
 {
+    [Area("Public")]
+    [MvcAreaRouteBase]
+    public class HomeController : Controller
+    {
+        [HttpGet("view-1")]
+        public IActionResult view1(int id)
+        {
+            return this.View();
+        }
+    }
+
     //[Route("Home")]
     //public class HomeController : Controller
     //{

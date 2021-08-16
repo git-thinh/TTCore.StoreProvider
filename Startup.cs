@@ -47,9 +47,6 @@ namespace TTCore.StoreProvider
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             //app.UseExceptionHandler("/Home/Error");
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIT.UI.Api v1"));
-
             app.UseMiddleware<RequestCultureMiddleware>();
             app.UseMiddleware<FactoryActivatedMiddleware>();
 
@@ -62,13 +59,11 @@ namespace TTCore.StoreProvider
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapApiRazorMvcMiddleware(app);
+
                 endpoints.MapSignalREndpointRoute();
                 endpoints.Test_POSTStreamPipe_MapEndpointRoute();
-
-                endpoints.MapApiRazorMvcMiddleware();
             });
         }
-
     }
-
 }
