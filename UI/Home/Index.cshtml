@@ -1,0 +1,21 @@
+﻿@using System
+@using System.Threading.Tasks
+@using TTCore.StoreProvider
+
+@*
+    @model IEnumerable<ToDoItem>
+    @inject DemoService Service
+*@
+
+@{ Layout = "None"; ViewData["Title"] = "Home Index"; }
+
+
+<div>
+    @await Html.PartialAsync("FormEmailLetter", new { Ok = true, Text = Guid.NewGuid().ToString() })
+    <h1>To Do Items</h1>
+    <hr />
+    <h3>@Context.Request.Path</h3>
+    <code>
+        @Html.Raw(Html.Encode(@"<partial name=""/Views/Home/_AuthorPartial.cshtml"" />"))
+    </code>
+</div>

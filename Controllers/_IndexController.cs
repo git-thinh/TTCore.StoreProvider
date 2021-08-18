@@ -9,11 +9,10 @@ namespace TTCore.StoreProvider.Controllers
 {
     public class _IndexController : Controller
     {
-        //[HttpGet("/")]
-        //public IActionResult Index()
-        //{
-        //    //return ControllerContext.MyDisplayRouteInfo();
-        //    return View();
-        //}
+        [HttpGet("/")]
+        public IActionResult Index()
+        {
+            return this.View2();
+        }
     }
 }

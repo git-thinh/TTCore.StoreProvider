@@ -135,22 +135,27 @@ namespace TTCore.StoreProvider
         public static ViewResult View2(this Controller controller)
         {
             string pathView = string.Empty;
-
             var context = controller.ControllerContext;
-            string area = context.ActionDescriptor.RouteValues["area"];
             string controllerName = context.ActionDescriptor.ControllerName;
-            string actionName = context.ActionDescriptor.ActionName;
-            string template = context.ActionDescriptor.AttributeRouteInfo?.Template;
-            string file = actionName + ".cshtml";
+            if (controllerName == "_Index")
+                pathView = "/UI/Home/Index.cshtml";
+            else
+            {
+                string area = context.ActionDescriptor.RouteValues["area"];
+                string actionName = context.ActionDescriptor.ActionName;
+                string template = context.ActionDescriptor.AttributeRouteInfo?.Template;
+                string file = actionName + ".cshtml";
 
-            int pos = template.IndexOf(controllerName + "/");
-            if (pos > 0) {
-                pos = pos + controllerName.Length + 1;
-                file = template.Substring(pos, template.Length - pos) + ".cshtml";
+                int pos = template.IndexOf(controllerName + "/");
+                if (pos > 0)
+                {
+                    pos = pos + controllerName.Length + 1;
+                    file = template.Substring(pos, template.Length - pos) + ".cshtml";
+                }
+
+                if (string.IsNullOrEmpty(area)) area = "Shared";
+                pathView = string.Format("/UI/{0}/{1}/{2}", area, controllerName, file);
             }
-
-            if (string.IsNullOrEmpty(area)) area = "Shared";
-            pathView = string.Format("/UI/{0}/{1}/{2}", area, controllerName, file);
 
             return controller.View(pathView);
         }
@@ -173,19 +178,25 @@ namespace TTCore.StoreProvider
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
 
-            services.AddRazorPages().WithRazorPagesRoot("/UI/Page"); 
+            services.AddRazorPages().WithRazorPagesRoot("/UI/Page");
             //services.Configure<RazorPagesOptions>(options => options.RootDirectory = "/UI/Page");
 
-            services.AddMvc(option => {
+            services.AddMvc(option =>
+            {
                 option.SetMvcResponseCaching();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            
+
             services.AddControllersWithViews();
             services.Configure<RazorViewEngineOptions>(o =>
             {
                 o.ViewLocationFormats.Clear();
+                o.ViewLocationFormats.Add("/UI/Header/{0}" + RazorViewEngine.ViewExtension);
+                o.ViewLocationFormats.Add("/UI/Component/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/UI/Layout/{0}" + RazorViewEngine.ViewExtension);
+
                 o.AreaViewLocationFormats.Clear();
+                o.AreaViewLocationFormats.Add("/UI/Header/{0}" + RazorViewEngine.ViewExtension);
+                o.AreaViewLocationFormats.Add("/UI/Component/{0}" + RazorViewEngine.ViewExtension);
                 o.AreaViewLocationFormats.Add("/UI/Layout/{0}" + RazorViewEngine.ViewExtension);
 
                 //o.ViewLocationFormats.Clear();
