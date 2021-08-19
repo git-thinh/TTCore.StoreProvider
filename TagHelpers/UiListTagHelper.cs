@@ -21,19 +21,25 @@ namespace TTCore.StoreProvider.TagHelpers
         {
             //if (string.Equals(context.TagName, "ui-list", StringComparison.OrdinalIgnoreCase))
             //{
-                output.TagName = "ul";    // ul sẽ thay cho myul
-                output.TagMode = TagMode.StartTagAndEndTag;
 
-                output.Attributes.SetAttribute("class", "list-group");
-                output.PreElement.AppendHtml($"<h2>{ListTitle}</h2>");
+            output.TagName = "ul";    // ul sẽ thay cho myul
+            output.TagMode = TagMode.StartTagAndEndTag;
 
-                StringBuilder content = new StringBuilder();
+            output.Attributes.SetAttribute("class", "list-group");
+            output.PreElement.AppendHtml($"<h2>{ListTitle}</h2>");
+
+            StringBuilder content = new StringBuilder();
+            if (ListItems != null)
+            {
                 foreach (var item in ListItems)
                 {
                     content.Append($@"<li class=""list-group-item"">{item}</li>");
                 }
-                output.Content.SetHtmlContent(content.ToString());
-                //output.PostContent.AppendHtml(script);
+            }
+
+            output.Content.SetHtmlContent(content.ToString());
+            //output.PostContent.AppendHtml(script);
+
             //}
         }
 

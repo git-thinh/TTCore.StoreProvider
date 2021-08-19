@@ -7,14 +7,23 @@ namespace TTCore.StoreProvider.TagHelpers
 {
     public class BodyScriptTagHelperComponent : TagHelperComponent
     {
-        public override int Order => 2;
-        
+        private readonly string _markup = "";
+        public override int Order { get; } = 2;
+        public BodyScriptTagHelperComponent(string markup = "", int order = 1)
+        {
+            _markup = markup;
+            Order = order;
+        }
+
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if (string.Equals(context.TagName, "body", StringComparison.OrdinalIgnoreCase))
             {
-                var script = await File.ReadAllTextAsync("TagHelpers/Templates/AddressToolTipScript.html");
-                output.PostContent.AppendHtml(script);
+                if (_markup.Length > 0)
+                {
+                    var script = await File.ReadAllTextAsync("TagHelpers/Templates/AddressToolTipScript.html");
+                    output.PostContent.AppendHtml(script + _markup);
+                }
             }
         }
     }

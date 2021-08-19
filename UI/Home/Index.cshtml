@@ -40,11 +40,6 @@
     425.555.0100
 </address>
 <hr />
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
-<hr />
 <h3><a href="/">Tag A</a></h3>
 <hr />
 @{ var productlist = new List<String> {
@@ -53,4 +48,5 @@
         "Tên Sản phẩm 3"
      }; }
 @await Html.PartialAsync("MyList", new { Title = "Title of list", Items = productlist })
-
+<hr />
+<hr />
