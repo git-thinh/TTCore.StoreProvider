@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using TTCore.StoreProvider.Middleware;
 using TTCore.StoreProvider.Middleware.Extentions;
 using TTCore.StoreProvider.Services;
+using TTCore.StoreProvider.Models;
 
 namespace TTCore.StoreProvider
 {
@@ -23,6 +24,9 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CollectionItems<UserLogin>>(_configuration);
+            services.Configure<CollectionItems<Article>>(_configuration);
+
             services.AddDbContext<DbMemoryContext>(options => options.UseInMemoryDatabase("DbRamEntity"));
             services.AddDbContext<DbUserContext>(options => options.UseInMemoryDatabase("DbRamUser"));
 

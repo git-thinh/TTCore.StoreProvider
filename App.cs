@@ -52,6 +52,9 @@ namespace TTCore.StoreProvider
                 //.UseIISIntegration()
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+                    config.AddJsonFile("wwwroot/json/user.json", optional: false, reloadOnChange: false);
+                    config.AddJsonFile("wwwroot/json/article.json", optional: false, reloadOnChange: true);
+
                     string environmentName = hostingContext.HostingEnvironment.EnvironmentName;
                     string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                     string file = Path.Combine(path, "appsettings.json");

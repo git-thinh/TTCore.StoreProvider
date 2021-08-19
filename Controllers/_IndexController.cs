@@ -2,16 +2,24 @@
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using TTCore.StoreProvider.TagHelpers;
 using System.Linq;
+using TTCore.StoreProvider.Models;
+using Microsoft.Extensions.Options;
 
 namespace TTCore.StoreProvider.Controllers
 {
     public class _IndexController : Controller
     {
-        private readonly ITagHelperComponentManager _tagHelperComponentManager;
+        readonly UserLogin[] _users;
+        readonly Article[] _articles;
+        readonly ITagHelperComponentManager _tagHelperComponentManager;
 
-        public _IndexController(ITagHelperComponentManager tagHelperComponentManager)
+        public _IndexController(ITagHelperComponentManager tagHelperComponentManager,
+            IOptions<CollectionItems<UserLogin>> userOptions,
+            IOptions<CollectionItems<Article>> articleOptions)
         {
             _tagHelperComponentManager = tagHelperComponentManager;
+            _users = userOptions.Value.Items;
+            _articles = articleOptions.Value.Items;
         }
 
         [HttpGet("/")]
