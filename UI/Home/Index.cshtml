@@ -1,14 +1,16 @@
 ﻿@using System
 @using System.Threading.Tasks
 @using TTCore.StoreProvider
+@using TTCore.StoreProvider.TagHelpers
+@using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 
 @*
+    @addTagHelper *, TTCore.StoreProvider
     @model IEnumerable<ToDoItem>
     @inject DemoService Service
 *@
 
 @{ ViewData["Title"] = "Home Index"; }
-
 
 <div>
     @await Html.PartialAsync("FormEmailLetter", new { Ok = true, Text = Guid.NewGuid().ToString() })
@@ -19,3 +21,36 @@
         @Html.Raw(Html.Encode(@"<partial name=""/Views/Home/_AuthorPartial.cshtml"" />"))
     </code>
 </div>
+<hr />
+<h2>Tag Helper Component registration via Razor Pages Page Model</h2>
+<ul>
+    <li>
+        <a href-key="Products"></a>
+    </li>
+    <li>
+        <a href-key="Products0"></a> &nbsp;
+        <a href-key="Products0 Edit"></a>
+    </li>
+</ul>
+<hr />
+<address printable>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+<hr />
+<address>
+    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>
+<hr />
+<h3><a href="/">Tag A</a></h3>
+<hr />
+@{ var productlist = new List<String> {
+        "Tên Sản phẩm 1",
+        "Tên Sản phẩm 2",
+        "Tên Sản phẩm 3"
+     }; }
+@await Html.PartialAsync("MyList", new { Title = "Title of list", Items = productlist })
+

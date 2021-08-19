@@ -19,11 +19,15 @@ namespace TTCore.StoreProvider.Helpers
 
             var href = ViewContext.ViewData[HrefKey] as string;
 
-            if (string.IsNullOrWhiteSpace(href))
-                return;
+            //if (string.IsNullOrWhiteSpace(href))
+            //    return;
 
             output.Attributes.SetAttribute("href", href);
-            output.Content.SetContent(href);
+
+            string text = href;
+            if (string.IsNullOrEmpty(href)) text = HrefKey;
+
+            output.Content.SetContent(text);
         }
     }
 }

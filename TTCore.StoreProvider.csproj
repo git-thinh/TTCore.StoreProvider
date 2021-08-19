@@ -5,11 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Test\**" />
+    <Content Remove="Controllers\Test\**" />
+    <EmbeddedResource Remove="Controllers\Test\**" />
+    <None Remove="Controllers\Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Models\FileDescriptionShort.cs" />
     <Compile Remove="ServiceBackground\RedisNotificationBroker.cs" />
     <Compile Remove="Helpers\CamlHelper.cs" />
     <Compile Remove="Helpers\DataBaseSP.cs" />
     <Compile Remove="Helpers\QueryService.cs" />
+    <Compile Remove="TagHelpers\AddressTagHelperComponent.cs" />
   </ItemGroup>
 
   <ItemGroup>

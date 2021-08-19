@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.Extensions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -14,6 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TTCore.StoreProvider.Middleware;
+using TTCore.StoreProvider.TagHelpers;
 
 namespace TTCore.StoreProvider
 {
@@ -66,67 +70,15 @@ namespace TTCore.StoreProvider
         }
     }
 
-    public class CustomLocationExpander : IViewLocationExpander
+    public class CustomTemplateEngine : MvcRazorTemplateEngine
     {
-        private const string _CustomViewPath = "CustomViewPath";
-        private const string _CustomController = "CustomController";
-        public void PopulateValues(ViewLocationExpanderContext context)
+        public CustomTemplateEngine(RazorEngine engine, RazorProject project) : base(engine, project) { }
+        public override RazorCSharpDocument GenerateCode(RazorCodeDocument codeDocument)
         {
-            Regex DefaultComponentDetector = new Regex(@"^((?:[Cc]omponents))+\/+([\w\.]+)\/+(.*)");
-
-
-            /*
-             * If successful, 
-             * Group 0 = FullMatch (ex "Components/MyComponent/Default")
-             * Group 1 = Components (ex "Component")
-             * Group 2 = Component Name (ex "MyComponent")
-             * Group 3 = View Name (ex "Default")
-             * */
-            var DefaultComponentMatch = DefaultComponentDetector.Match(context.ViewName);
-
-            if (DefaultComponentMatch.Success)
-            {
-                // Will render Components/ComponentName as the new view name
-                context.Values.Add(_CustomViewPath, string.Format("{0}/{1}", DefaultComponentMatch.Groups[1].Value, DefaultComponentMatch.Groups[2].Value));
-                context.Values.Add(_CustomController, context.ControllerName);
-            }
-
-        }
-
-        public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
-        {
-            /* Parameters:
-             * {2} - Area Name
-             * {1} - Controller Name
-             * {0} - View Name
-             */
-            List<string> Paths = new List<string> { 
-            // Default View Locations to support imported / legacy paths
-            "/Views/{1}/{0}.cshtml",
-            "/Views/Shared/{0}.cshtml",
-
-            // Adds Feature Folder Rendering
-            "/Features/{1}/{0}.cshtml",
-            "/Features/Shared/{0}.cshtml",
-
-            // Handles My Custom rendered views
-            "/{0}.cshtml"
-            };
-
-            // Add "Hard Coded" custom view paths to checks, along with the normal default view paths for backward compatability
-            if (context.Values.ContainsKey(_CustomViewPath))
-            {
-                // Generate full View Paths with my custom View Name and Controller Name
-
-                var CombinedPaths = new List<string>(Paths.Select(x => string.Format(x, context.Values[_CustomViewPath], context.Values[_CustomController], "")));
-                // Add in original paths for backward compatability
-                CombinedPaths.AddRange(Paths);
-
-                return CombinedPaths;
-            }
-
-            // Returns the normal view paths
-            return Paths;
+            var csharpDocument = base.GenerateCode(codeDocument);
+            var generatedCode = csharpDocument.GeneratedCode;
+            // Look at generatedCode
+            return csharpDocument;
         }
     }
 
@@ -175,6 +127,11 @@ namespace TTCore.StoreProvider
 
         public static void AddApiRazorMvcService(this IServiceCollection services)
         {
+            //services.AddSingleton<RazorTemplateEngine, CustomTemplateEngine>();
+
+            services.AddTransient<ITagHelperComponent, BodyScriptTagHelperComponent>();
+            services.AddTransient<ITagHelperComponent, HeaderStyleTagHelperComponent>();
+
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
 
