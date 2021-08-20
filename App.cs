@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using TTCore.StoreProvider.ServiceBackground;
 
 namespace TTCore.StoreProvider
 {
@@ -76,8 +78,9 @@ namespace TTCore.StoreProvider
                 })
                 .ConfigureServices(services =>
                 {
-                    //services.AddHostedService<LifetimeEventsHostedService>();
-                    //services.AddHostedService<TimedHostedService>();
+                    services.AddHostedService<RedisNotificationBroker>();
+                    services.AddHostedService<LifetimeEventsHostedService>();
+                    services.AddHostedService<TimedHostedService>();
                 })
                 .ConfigureLogging(logging =>
                 {

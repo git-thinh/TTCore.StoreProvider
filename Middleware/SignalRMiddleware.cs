@@ -12,7 +12,6 @@ namespace TTCore.StoreProvider.Middleware
     {
         public static void AddSignalRService(this IServiceCollection services)
         {
-            string redisConnect = "127.0.0.1:1000,allowAdmin=true,abortConnect=false,defaultDatabase=15,syncTimeout=5000";
             services.AddSignalR()
                 .AddMessagePackProtocol(options =>
                 {
@@ -24,11 +23,11 @@ namespace TTCore.StoreProvider.Middleware
                     //options.SerializerOptions = MessagePackSerializerOptions.Standard
                     //    .WithResolver(StaticCompositeResolver.Instance)
                     //    .WithSecurity(MessagePackSecurity.UntrustedData);
-                })
-                .AddStackExchangeRedis(redisConnect, options =>
-                {
-                    options.Configuration.ChannelPrefix = "MyApp";
                 });
+                //.AddStackExchangeRedis(redisConnect, options =>
+                //{
+                //    options.Configuration.ChannelPrefix = "MyApp";
+                //});
             services.AddHostedService<ClockWorker>();
         }
 
