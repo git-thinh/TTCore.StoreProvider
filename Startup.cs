@@ -9,6 +9,7 @@ using TTCore.StoreProvider.Middleware;
 using TTCore.StoreProvider.Middleware.Extentions;
 using TTCore.StoreProvider.Services;
 using TTCore.StoreProvider.Models;
+using TTCore.StoreProvider.ServiceBackground;
 
 namespace TTCore.StoreProvider
 {
@@ -24,6 +25,9 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<RedisService>();
+            services.AddSingleton<IHostedService>(p => p.GetService<RedisService>());
+
             services.Configure<CollectionItems<UserLogin>>(_configuration);
             services.Configure<CollectionItems<Article>>(_configuration);
 

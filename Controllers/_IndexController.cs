@@ -4,6 +4,8 @@ using TTCore.StoreProvider.TagHelpers;
 using System.Linq;
 using TTCore.StoreProvider.Models;
 using Microsoft.Extensions.Options;
+using TTCore.StoreProvider.ServiceBackground;
+using System;
 
 namespace TTCore.StoreProvider.Controllers
 {
@@ -11,15 +13,18 @@ namespace TTCore.StoreProvider.Controllers
     {
         readonly UserLogin[] _users;
         readonly Article[] _articles;
-        readonly ITagHelperComponentManager _tagHelperComponentManager;
-
-        public _IndexController(ITagHelperComponentManager tagHelperComponentManager,
+        readonly ITagHelperComponentManager _tagHelperManager;
+        public _IndexController(ITagHelperComponentManager tagHelper,
             IOptions<CollectionItems<UserLogin>> userOptions,
-            IOptions<CollectionItems<Article>> articleOptions)
+            IOptions<CollectionItems<Article>> articleOptions,
+            RedisService redis)
         {
-            _tagHelperComponentManager = tagHelperComponentManager;
+            _tagHelperManager = tagHelper;
             _users = userOptions.Value.Items;
             _articles = articleOptions.Value.Items;
+            //var _redis = redis.GetDB(1);
+            //var keys = redis.GetServer().Keys(1).ToArray();
+            //var _redis.StringSet("k1", DateTime.Now.ToString());
         }
 
         [HttpGet("/")]
@@ -27,7 +32,7 @@ namespace TTCore.StoreProvider.Controllers
         {
             string markup = "<h1>_tagHelperComponentManager UiFooterTagHelper</h1><em class='text-warning'> _tagHelperComponentManager Office closed today!</em>";
             var footer = new BodyScriptTagHelperComponent(markup, 1);
-            var cs = _tagHelperComponentManager.Components.ToArray();
+            var cs = _tagHelperManager.Components.ToArray();
             var index = -1;
             for (int i = 0; i < cs.Length; i++) {
                 string name = cs[i].GetType().Name;
@@ -39,8 +44,8 @@ namespace TTCore.StoreProvider.Controllers
             
             if (index != -1)
             {
-                _tagHelperComponentManager.Components.Remove(cs[index]);
-                _tagHelperComponentManager.Components.Add(footer);
+                _tagHelperManager.Components.Remove(cs[index]);
+                _tagHelperManager.Components.Add(footer);
             }
 
             return this.View2();

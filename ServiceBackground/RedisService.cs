@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +11,13 @@ using TTCore.StoreProvider.Hubs;
 
 namespace TTCore.StoreProvider.ServiceBackground
 {
-    public class RedisNotificationBroker : BackgroundService
+    public interface IRedisService
+    {
+        IDatabase GetDB(int db);
+        IServer GetServer();
+    }
+
+    public class RedisService : BackgroundService, IRedisService
     {
         readonly string redisConnect = "127.0.0.1:1000,allowAdmin=true,abortConnect=false,defaultDatabase=15,syncTimeout=5000";
         readonly IHubContext<RedisHub> _appHubContext;
@@ -19,17 +26,47 @@ namespace TTCore.StoreProvider.ServiceBackground
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
-        readonly string ServiceName = nameof(RedisNotificationBroker);
+        readonly string ServiceName = nameof(RedisService);
 
         static ConnectionMultiplexer connection = null;
-        public RedisNotificationBroker(IHubContext<RedisHub> hubContext,
-            ILoggerFactory loggerFactory)
+
+        public IDatabase GetDB(int db)
+        {
+            return connection.GetDatabase(db);
+        }
+
+        public IServer GetServer()
+        {
+            var eps = connection.GetEndPoints();
+            return connection.GetServer(eps[0]);
+        }
+
+        public RedisService(IHubContext<RedisHub> hubContext, ILoggerFactory loggerFactory)
         {
             _appHubContext = hubContext;
             _logger = loggerFactory.CreateLogger(GetType());
+
             connection = ConnectionMultiplexer.Connect(redisConnect);
+
+            //var config = new ConfigurationOptions
+            //{
+            //    AbortOnConnectFail = false
+            //};
+            //config.EndPoints.Add(IPAddress.Loopback, 0);
+            //config.SetDefaultPorts();
+            //connection = ConnectionMultiplexer.Connect(config);
+            //connection.ConnectionFailed += (_, e) =>
+            //{
+            //    Console.WriteLine("Connection to Redis failed.");
+            //};
+            //if (!connection.IsConnected)
+            //{
+            //    Console.WriteLine("Did not connect to Redis.");
+            //}
         }
 
+        public override Task StartAsync(CancellationToken cancellationToken) { return base.StartAsync(cancellationToken); }
+        public override Task StopAsync(CancellationToken cancellationToken) { return base.StopAsync(cancellationToken); }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation($"{ServiceName} is starting.");
