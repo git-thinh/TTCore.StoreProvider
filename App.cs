@@ -79,8 +79,9 @@ namespace TTCore.StoreProvider
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<RedisNotificationBroker>();
-                    services.AddHostedService<LifetimeEventsHostedService>();
-                    services.AddHostedService<TimedHostedService>();
+                    services.AddHostedService<FeedService>();
+                    //services.AddHostedService<LifetimeEventsHostedService>();
+                    //services.AddHostedService<TimedHostedService>();
                 })
                 .ConfigureLogging(logging =>
                 {

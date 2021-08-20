@@ -4,8 +4,6 @@ Microsoft.EntityFrameworkCore
 Microsoft.EntityFrameworkCore.InMemory
 
 Microsoft.AspNetCore.SignalR
-Microsoft.AspNetCore.SignalR.Redis
-Microsoft.AspNetCore.SignalR.StackExchangeRedis
 Microsoft.AspNetCore.SignalR.Protocols.MessagePack
 
 NLog
@@ -17,8 +15,8 @@ Swashbuckle.AspNetCore.SwaggerGen
 Swashbuckle.AspNetCore.SwaggerUI
 Microsoft.Docs.Samples.RouteInfo
 
-LigerShark.WebOptimizer.Core
-LigerShark.WebOptimizer.Sass
+Microsoft.Toolkit.Parsers.Rss
+
 ---------------------------------------------
 
 * If you get the error ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY in Chrome, 
