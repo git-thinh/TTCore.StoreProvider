@@ -25,6 +25,8 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IImageService, ImageService>();
+
             services.AddSingleton<RedisService>();
             services.AddSingleton<IHostedService>(p => p.GetService<RedisService>());
 

@@ -9,6 +9,7 @@ using Microsoft.Net.Http.Headers;
 using TTCore.StoreProvider.Hubs;
 using TTCore.StoreProvider.Middleware;
 using TTCore.StoreProvider.Models;
+using TTCore.StoreProvider.Services;
 
 namespace TTCore.StoreProvider.Apis
 {
@@ -16,10 +17,13 @@ namespace TTCore.StoreProvider.Apis
     public class FileController : Controller
     {
         readonly IHubContext<ImageMessageHub> _hubContext;
+        readonly IImageService _imageService;
 
-        public FileController(IHubContext<ImageMessageHub> hubContext)
+        public FileController(IHubContext<ImageMessageHub> hubContext,
+            IImageService imageService)
         {
             _hubContext = hubContext;
+            _imageService = imageService;
         }
 
         [Route("upload")]
@@ -38,6 +42,8 @@ namespace TTCore.StoreProvider.Apis
                 {
                     if (file.Length > 0)
                     {
+                        var buf = _imageService.ConvertWebP(file, 75);
+
                         using (var memoryStream = new MemoryStream())
                         {
                             await file.CopyToAsync(memoryStream);
