@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Docs.Samples;
 
 namespace TTCore.StoreProvider.Controllers
 {

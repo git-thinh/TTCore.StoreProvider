@@ -7,7 +7,6 @@ using TTCore.StoreProvider.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Docs.Samples;
 using TTCore.StoreProvider.Middleware;
 
 namespace TTCore.StoreProvider.Apis
@@ -73,13 +72,25 @@ namespace TTCore.StoreProvider.Apis
         [HttpGet("{id:customName}")]
         public IActionResult Get(string id)
         {
-            return ControllerContext.MyDisplayRouteInfo(id);
+            var area = ControllerContext.ActionDescriptor.RouteValues["area"];
+            var controllerName = ControllerContext.ActionDescriptor.ControllerName;
+            var actionName = ControllerContext.ActionDescriptor.ActionName;
+            var template = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
+
+            return Content($"area name:{area} controller:{controllerName}  action name: {actionName}  template:{template}");
+
         }
 
         [HttpGet("my/{id:customName}")]
         public IActionResult Get(int id)
         {
-            return ControllerContext.MyDisplayRouteInfo(id);
+            var area = ControllerContext.ActionDescriptor.RouteValues["area"];
+            var controllerName = ControllerContext.ActionDescriptor.ControllerName;
+            var actionName = ControllerContext.ActionDescriptor.ActionName;
+            var template = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
+
+            return Content($"area name:{area} controller:{controllerName}  action name: {actionName}  template:{template}");
+
         }
 
     }

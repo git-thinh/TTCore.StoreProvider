@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Docs.Samples;
 
 namespace TTCore.StoreProvider.Controllers
 {
@@ -7,12 +6,24 @@ namespace TTCore.StoreProvider.Controllers
     {
         public IActionResult Article()
         {
-            return ControllerContext.MyDisplayRouteInfo();
+            var area = ControllerContext.ActionDescriptor.RouteValues["area"];
+            var controllerName = ControllerContext.ActionDescriptor.ControllerName;
+            var actionName = ControllerContext.ActionDescriptor.ActionName;
+            var template = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
+
+            return Content($"area name:{area} controller:{controllerName}  action name: {actionName}  template:{template}");
+
         }
 
         public IActionResult Index()
         {
-            return ControllerContext.MyDisplayRouteInfo();
+            var area = ControllerContext.ActionDescriptor.RouteValues["area"];
+            var controllerName = ControllerContext.ActionDescriptor.ControllerName;
+            var actionName = ControllerContext.ActionDescriptor.ActionName;
+            var template = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
+
+            return Content($"area name:{area} controller:{controllerName}  action name: {actionName}  template:{template}");
+
         }
     }
 }

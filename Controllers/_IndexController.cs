@@ -6,8 +6,6 @@ using TTCore.StoreProvider.Models;
 using Microsoft.Extensions.Options;
 using TTCore.StoreProvider.ServiceBackground;
 using TTCore.StoreProvider.Services;
-using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
 using System.Threading.Tasks;
 
 namespace TTCore.StoreProvider.Controllers

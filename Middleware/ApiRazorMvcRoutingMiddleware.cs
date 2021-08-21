@@ -172,8 +172,7 @@ namespace TTCore.StoreProvider
                     }
                 });
             }); 
-            services.AddGrpcSwagger();
-
+            //services.AddGrpcSwagger();
 
 
             services.AddRazorPages().WithRazorPagesRoot("/UI/Page");

@@ -14,15 +14,6 @@ using TTCore.StoreProvider.ServiceBackground;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
-using System;
-using Google.Protobuf;
-using System.Collections.Generic;
-using Google.Api;
-using Microsoft.AspNetCore.Routing;
-using System.Linq;
-using Grpc.AspNetCore.Server;
-
-using Microsoft.AspNetCore.Http;
 
 namespace TTCore.StoreProvider
 {
@@ -36,39 +27,15 @@ namespace TTCore.StoreProvider
             _environment = env;
         }
 
-        static RouteEndpoint FindGrpcEndpoint(
-            IReadOnlyList<Microsoft.AspNetCore.Http.Endpoint> endpoints, 
-            string methodName)
-        {
-            var e = FindGrpcEndpoints(endpoints, methodName).SingleOrDefault();
-            if (e == null)
-            {
-                throw new InvalidOperationException($"Couldn't find gRPC endpoint for method {methodName}.");
-            }
-
-            return e;
-        }
-
-        static List<RouteEndpoint> FindGrpcEndpoints(
-            IReadOnlyList<Microsoft.AspNetCore.Http.Endpoint> endpoints, 
-            string methodName)
-        {
-            var e = endpoints
-                .Where(e => e.Metadata.GetMetadata<GrpcMethodMetadata>()?.Method.Name == methodName)
-                .Cast<RouteEndpoint>()
-                .ToList();
-            return e;
-        }
-
         public void ConfigureServices(IServiceCollection services)
         {
             //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
-            services.AddGrpc(o => { });
-            services.AddGrpcHttpApi(o =>
-            {
-                o.JsonFormatter = new JsonFormatter(new JsonFormatter.Settings(formatDefaultValues: false));
-                o.JsonParser = new JsonParser(new JsonParser.Settings(recursionLimit: 1));
-            });
+            //services.AddGrpc(o => { });
+            //services.AddGrpcHttpApi(o =>
+            //{
+            //    o.JsonFormatter = new JsonFormatter(new JsonFormatter.Settings(formatDefaultValues: false));
+            //    o.JsonParser = new JsonParser(new JsonParser.Settings(recursionLimit: 1));
+            //});
             //services.AddMvc();
 
             ////services.AddGrpc();
@@ -105,15 +72,14 @@ namespace TTCore.StoreProvider
             {
                 var SecretBytes = System.Text.Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var SecurityKey = new SymmetricSecurityKey(SecretBytes);
-                options.TokenValidationParameters =
-                    new TokenValidationParameters
-                    {
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
-                        ValidateActor = false,
-                        ValidateLifetime = true,
-                        IssuerSigningKey = SecurityKey
-                    };
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateActor = false,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = SecurityKey
+                };
             });
 
 
@@ -141,7 +107,7 @@ namespace TTCore.StoreProvider
 
             services.AddSignalRService();
 
-            services.AddGrpcSwagger();
+            //services.AddGrpcSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -170,8 +136,8 @@ namespace TTCore.StoreProvider
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<HttpApiGreeterService>();
-                endpoints.MapGrpcService<GreeterService>();
+                //endpoints.MapGrpcService<HttpApiGreeterService>();
+                //endpoints.MapGrpcService<GreeterService>();
                 //endpoints.MapGrpcService<TicketerService>();
 
                 endpoints.MapApiRazorMvcMiddleware(app);

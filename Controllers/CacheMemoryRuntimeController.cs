@@ -21,7 +21,6 @@ namespace TTCore.StoreProvider.Controllers
             return RedirectToAction("CacheGet");
         }
 
-        #region snippet1
         public IActionResult CacheTryGetValueSet()
         {
             DateTime cacheEntry;
@@ -43,17 +42,13 @@ namespace TTCore.StoreProvider.Controllers
 
             return View("Cache", cacheEntry);
         }
-        #endregion
 
-        #region snippet_gct
         public IActionResult CacheGet()
         {
             var cacheEntry = _cache.Get<DateTime?>(CacheKeys.Entry);
             return View("Cache", cacheEntry);
         }
-        #endregion
 
-        #region snippet2
         public IActionResult CacheGetOrCreate()
         {
             var cacheEntry = _cache.GetOrCreate(CacheKeys.Entry, entry =>
@@ -76,7 +71,6 @@ namespace TTCore.StoreProvider.Controllers
 
             return View("Cache", cacheEntry);
         }
-        #endregion
 
         public IActionResult CacheRemove()
         {
@@ -84,7 +78,6 @@ namespace TTCore.StoreProvider.Controllers
             return RedirectToAction("CacheGet");
         }
 
-        #region snippet_et
         public IActionResult CreateCallbackEntry()
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions()
@@ -119,9 +112,7 @@ namespace TTCore.StoreProvider.Controllers
             var message = $"Entry was evicted. Reason: {reason}.";
             ((CacheMemoryRuntimeController)state)._cache.Set(CacheKeys.CallbackMessage, message);
         }
-        #endregion
 
-        #region snippet_ed
         public IActionResult CreateDependentEntries()
         {
             var cts = new CancellationTokenSource();
@@ -163,9 +154,7 @@ namespace TTCore.StoreProvider.Controllers
             var message = $"Parent entry was evicted. Reason: {reason}.";
             ((CacheMemoryRuntimeController)state)._cache.Set(CacheKeys.DependentMessage, message);
         }
-        #endregion
 
-        #region snippet_cancel
         public IActionResult CancelTest()
         {
             var cachedVal = DateTime.Now.Second.ToString();
@@ -204,8 +193,6 @@ namespace TTCore.StoreProvider.Controllers
 
             return View();
         }
-        #endregion
-
     }
 
     public static class CacheKeys
