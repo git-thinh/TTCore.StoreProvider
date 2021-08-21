@@ -17,6 +17,12 @@ Microsoft.Docs.Samples.RouteInfo
 
 Microsoft.Toolkit.Parsers.Rss
 
+System.IdentityModel.Tokens.Jwt
+Microsoft.AspNetCore.Authentication.JwtBearer
+
+Google.Protobuf
+Grpc.Core
+
 ---------------------------------------------
 
 * If you get the error ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY in Chrome, 

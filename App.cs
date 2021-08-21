@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using TTCore.StoreProvider.ServiceBackground;
@@ -73,6 +75,14 @@ namespace TTCore.StoreProvider
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureKestrel(options =>
+                    {
+                        options.Listen(IPAddress.Any, 5001, listenOptions =>
+                        {
+                            listenOptions.Protocols = HttpProtocols.Http2;
+                            listenOptions.UseHttps(@"C:\Certs\b2bprod.pfx", "M@scot123");
+                        });
+                    });
                     Type typeStartup = typeof(Startup);
                     webBuilder.UseStartup(typeStartup);
                 })
@@ -80,7 +90,7 @@ namespace TTCore.StoreProvider
                 {
                     //services.AddHostedService<RedisService>();
                     //services.AddHostedService<FeedService>();
-                    //services.AddHostedService<LifetimeEventsHostedService>();
+                    services.AddHostedService<LifetimeEventsHostedService>();
                     //services.AddHostedService<TimedHostedService>();
                 })
                 .ConfigureLogging(logging =>

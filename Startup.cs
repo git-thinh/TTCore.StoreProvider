@@ -11,6 +11,19 @@ using TTCore.StoreProvider.Services;
 using TTCore.StoreProvider.Models;
 using TTCore.StoreProvider.ServiceBackground;
 
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Security.Claims;
+using System;
+using Google.Protobuf;
+using System.Collections.Generic;
+using Google.Api;
+using Microsoft.AspNetCore.Routing;
+using System.Linq;
+using Grpc.AspNetCore.Server;
+
+using Microsoft.AspNetCore.Http;
+
 namespace TTCore.StoreProvider
 {
     public class Startup
@@ -23,8 +36,87 @@ namespace TTCore.StoreProvider
             _environment = env;
         }
 
+        static RouteEndpoint FindGrpcEndpoint(
+            IReadOnlyList<Microsoft.AspNetCore.Http.Endpoint> endpoints, 
+            string methodName)
+        {
+            var e = FindGrpcEndpoints(endpoints, methodName).SingleOrDefault();
+            if (e == null)
+            {
+                throw new InvalidOperationException($"Couldn't find gRPC endpoint for method {methodName}.");
+            }
+
+            return e;
+        }
+
+        static List<RouteEndpoint> FindGrpcEndpoints(
+            IReadOnlyList<Microsoft.AspNetCore.Http.Endpoint> endpoints, 
+            string methodName)
+        {
+            var e = endpoints
+                .Where(e => e.Metadata.GetMetadata<GrpcMethodMetadata>()?.Method.Name == methodName)
+                .Cast<RouteEndpoint>()
+                .ToList();
+            return e;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
+            services.AddGrpc(o => { });
+            services.AddGrpcHttpApi(o =>
+            {
+                o.JsonFormatter = new JsonFormatter(new JsonFormatter.Settings(formatDefaultValues: false));
+                o.JsonParser = new JsonParser(new JsonParser.Settings(recursionLimit: 1));
+            });
+            //services.AddMvc();
+
+            ////services.AddGrpc();
+            //////services.AddGrpcClient<Ticketer.TicketerClient>(c =>
+            //////{
+            //////    //var url = Configuration.GetServiceUri("backend");
+            //////    var url = new Uri("http://localhost:42656");
+            //////    c.Address = url;
+            //////});
+            //////services.AddSingleton<Greet.Greeter.GreeterClient>(services =>
+            //////{
+            //////    var channel = GrpcChannel.ForAddress("http://localhost:42656");
+            //////    var client = new Greet.Greeter.GreeterClient(channel);
+            //////    var reply = client.SayHello(new Greet.HelloRequest() { Name = "123" });
+            //////    return client;
+            //////});
+
+
+            var _appSettings = new AppSettings();
+            _configuration.GetSection("AppSettings").Bind(_appSettings);
+
+            services.AddSingleton<AppSettings>(_appSettings);
+            services.AddSingleton<IJwtService, JwtService>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(JwtBearerDefaults.AuthenticationScheme, policy =>
+                {
+                    policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireClaim(ClaimTypes.Name);
+                });
+            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                var SecretBytes = System.Text.Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var SecurityKey = new SymmetricSecurityKey(SecretBytes);
+                options.TokenValidationParameters =
+                    new TokenValidationParameters
+                    {
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateActor = false,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = SecurityKey
+                    };
+            });
+
+
             services.AddSingleton<IImageService, ImageService>();
 
             services.AddSingleton<RedisService>();
@@ -48,6 +140,8 @@ namespace TTCore.StoreProvider
             services.AddApiRazorMvcService();
 
             services.AddSignalRService();
+
+            services.AddGrpcSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,13 +161,25 @@ namespace TTCore.StoreProvider
 
             app.UseRouting();
             app.UseAuthorization();
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            app.UseMiddleware<JwtMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<HttpApiGreeterService>();
+                endpoints.MapGrpcService<GreeterService>();
+                //endpoints.MapGrpcService<TicketerService>();
+
                 endpoints.MapApiRazorMvcMiddleware(app);
 
                 endpoints.MapSignalREndpointRoute();
                 endpoints.Test_POSTStreamPipe_MapEndpointRoute();
             });
         }
+
     }
 }

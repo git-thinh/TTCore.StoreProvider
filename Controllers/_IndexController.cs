@@ -5,7 +5,10 @@ using System.Linq;
 using TTCore.StoreProvider.Models;
 using Microsoft.Extensions.Options;
 using TTCore.StoreProvider.ServiceBackground;
-using System;
+using TTCore.StoreProvider.Services;
+using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
+using System.Threading.Tasks;
 
 namespace TTCore.StoreProvider.Controllers
 {
@@ -13,12 +16,19 @@ namespace TTCore.StoreProvider.Controllers
     {
         readonly UserLogin[] _users;
         readonly Article[] _articles;
+        readonly IJwtService _userService;
         readonly ITagHelperComponentManager _tagHelperManager;
+        //readonly Greet.Greeter.GreeterClient _client;
+
         public _IndexController(ITagHelperComponentManager tagHelper,
             IOptions<CollectionItems<UserLogin>> userOptions,
             IOptions<CollectionItems<Article>> articleOptions,
+            //Greet.Greeter.GreeterClient client,
+            IJwtService userService,
             RedisService redis)
         {
+            //_client = client;
+            _userService = userService;
             _tagHelperManager = tagHelper;
             _users = userOptions.Value.Items;
             _articles = articleOptions.Value.Items;
@@ -28,8 +38,13 @@ namespace TTCore.StoreProvider.Controllers
         }
 
         [HttpGet("/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //var channel = Grpc.Net.Client.GrpcChannel.ForAddress("http://localhost:42656");
+            //var client = new Greet.Greeter.GreeterClient(channel);
+            //var reply = client.SayHello(new Greet.HelloRequest() { Name = "123" });
+            ////var reply = await _client.SayHelloAsync(new Greet.HelloRequest() { Name = "123" });
+
             string markup = "<h1>_tagHelperComponentManager UiFooterTagHelper</h1><em class='text-warning'> _tagHelperComponentManager Office closed today!</em>";
             var footer = new BodyScriptTagHelperComponent(markup, 1);
             var cs = _tagHelperManager.Components.ToArray();
@@ -49,6 +64,13 @@ namespace TTCore.StoreProvider.Controllers
             }
 
             return this.View2();
+        }
+
+        [HttpGet("/token")]
+        public string GetToken(string name)
+        {
+            string token = _userService.GenerateJwtToken(name);
+            return token;
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Razor.Extensions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -12,9 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.RegularExpressions;
 using TTCore.StoreProvider.Middleware;
 using TTCore.StoreProvider.TagHelpers;
@@ -133,7 +129,52 @@ namespace TTCore.StoreProvider
             services.AddTransient<ITagHelperComponent, HeaderStyleTagHelperComponent>();
 
             services.AddControllers();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger.Api", Version = "v1" }); });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "TTCore API",
+                    Description = "TTCore API Swagger Surface",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Mr.Thinh",
+                        Email = "chuphucben@gmail.com",
+                        Url = new Uri("http://thinh.iot.vn")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "MIT",
+                        Url = new Uri("http://thinh.iot.vn/LICENSE")
+                    }
+                });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement() {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            }); 
+            services.AddGrpcSwagger();
+
+
 
             services.AddRazorPages().WithRazorPagesRoot("/UI/Page");
             //services.Configure<RazorPagesOptions>(options => options.RootDirectory = "/UI/Page");
@@ -179,7 +220,6 @@ namespace TTCore.StoreProvider
             {
                 option.ConstraintMap.Add("customName", typeof(MyCustomConstraint));
             });
-
         }
 
         public static void MapApiRazorMvcMiddleware(this IEndpointRouteBuilder endpoints, IApplicationBuilder app)
@@ -220,5 +260,4 @@ namespace TTCore.StoreProvider
             endpoints.MapRazorPages();
         }
     }
-
 }

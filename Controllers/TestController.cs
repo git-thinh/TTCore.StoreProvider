@@ -7,8 +7,8 @@ using TTCore.StoreProvider.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Docs.Samples;
+using TTCore.StoreProvider.Middleware;
 
 namespace TTCore.StoreProvider.Apis
 {
@@ -28,6 +28,15 @@ namespace TTCore.StoreProvider.Apis
         public async Task<IEnumerable<Request>> Get()
         {
             //var site = this.getSiteSetting();
+            await CreateRadomItem();
+            List<Request> ls = await _db.Requests.ToListAsync();
+            return ls;
+        }
+
+        [HttpGet("jwt-authorize")]
+        [JwtAuthorize]
+        public async Task<IEnumerable<Request>> TokenDemo()
+        {
             List<Request> ls = await _db.Requests.ToListAsync();
             return ls;
         }
