@@ -3,12 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-  
   <ItemGroup>
-    <Protobuf Include="Protos\httpapi.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\greet.proto" />
+    <Protobuf Include="Protos\helloworld.proto" />
   </ItemGroup>
-  
   <ItemGroup> 
     <Compile Remove="Controllers\Test\**" />
     <Content Remove="Controllers\Test\**" />
@@ -17,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Grpc\RouteGuideUtil.cs" />
     <Compile Remove="Models\FileDescriptionShort.cs" />
     <Compile Remove="Helpers\CamlHelper.cs" />
     <Compile Remove="Helpers\DataBaseSP.cs" />
@@ -30,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Protos\" />
     <Folder Include="wwwroot\dist\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
@@ -44,6 +41,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.17.3" />
+    <PackageReference Include="Grpc.Core" Version="2.39.1" />
+    <PackageReference Include="Grpc.Tools" Version="2.39.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />

@@ -7,6 +7,9 @@ using Microsoft.Extensions.Options;
 using TTCore.StoreProvider.ServiceBackground;
 using TTCore.StoreProvider.Services;
 using System.Threading.Tasks;
+using Grpc.Core;
+using Helloworld;
+using System;
 
 namespace TTCore.StoreProvider.Controllers
 {
@@ -38,11 +41,6 @@ namespace TTCore.StoreProvider.Controllers
         [HttpGet("/")]
         public async Task<IActionResult> Index()
         {
-            //var channel = Grpc.Net.Client.GrpcChannel.ForAddress("http://localhost:42656");
-            //var client = new Greet.Greeter.GreeterClient(channel);
-            //var reply = client.SayHello(new Greet.HelloRequest() { Name = "123" });
-            ////var reply = await _client.SayHelloAsync(new Greet.HelloRequest() { Name = "123" });
-
             string markup = "<h1>_tagHelperComponentManager UiFooterTagHelper</h1><em class='text-warning'> _tagHelperComponentManager Office closed today!</em>";
             var footer = new BodyScriptTagHelperComponent(markup, 1);
             var cs = _tagHelperManager.Components.ToArray();
@@ -62,6 +60,24 @@ namespace TTCore.StoreProvider.Controllers
             }
 
             return this.View2();
+        }
+
+        [HttpGet("/grpc")]
+        public string grpc(string name)
+        {
+            string s = string.Empty;
+            try
+            {
+                var channel = new Channel("127.0.0.1:101010", ChannelCredentials.Insecure);
+                var client = new Greeter.GreeterClient(channel);
+                var reply = client.SayHello(new HelloRequest { Name = name });
+                s = reply.Message;
+                channel.ShutdownAsync().Wait();
+            }
+            catch (Exception ex)
+            {
+            }
+            return s;
         }
 
         [HttpGet("/token")]

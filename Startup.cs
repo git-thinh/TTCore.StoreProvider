@@ -29,6 +29,8 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHostedService<GrpcService>();
+
             //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
             //services.AddGrpc(o => { });
             //services.AddGrpcHttpApi(o =>
