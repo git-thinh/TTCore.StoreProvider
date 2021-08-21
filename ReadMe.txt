@@ -22,6 +22,7 @@ Microsoft.AspNetCore.Authentication.JwtBearer
 
 Google.Protobuf
 Grpc.Core
+Grpc.Tools
 
 ---------------------------------------------
 
