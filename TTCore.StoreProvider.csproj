@@ -7,10 +7,14 @@
     <Protobuf Include="Protos\helloworld.proto" />
   </ItemGroup>
   <ItemGroup> 
-    <Compile Remove="Controllers\Test\**" />
+    <Compile Remove="Controllers\Test\**" /> 
+    <Compile Remove="Dapper.Contrib\Dapper.Test\**" />
     <Content Remove="Controllers\Test\**" />
+    <Content Remove="Dapper.Contrib\Dapper.Test\**" />
     <EmbeddedResource Remove="Controllers\Test\**" />
+    <EmbeddedResource Remove="Dapper.Contrib\Dapper.Test\**" />
     <None Remove="Controllers\Test\**" />
+    <None Remove="Dapper.Contrib\Dapper.Test\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Google.Protobuf" Version="3.17.3" />
     <PackageReference Include="Grpc.Core" Version="2.39.1" />
     <PackageReference Include="Grpc.Tools" Version="2.39.1">
@@ -53,6 +58,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="5.0.9" />
+    <PackageReference Include="Microsoft.ClearScript.V8" Version="7.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.9" />
     <PackageReference Include="Microsoft.Toolkit.Parsers" Version="6.1.1" />
@@ -62,7 +68,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.5" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.5" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
   </ItemGroup>
 
   <ItemGroup>
