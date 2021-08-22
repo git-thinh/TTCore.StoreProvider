@@ -20,14 +20,17 @@ namespace TTCore.StoreProvider.Controllers
         readonly IJwtService _userService;
         readonly ITagHelperComponentManager _tagHelperManager;
         //readonly Greet.Greeter.GreeterClient _client;
+        readonly ISearcher _searcher;
 
         public _IndexController(ITagHelperComponentManager tagHelper,
             IOptions<CollectionItems<UserLogin>> userOptions,
             IOptions<CollectionItems<Article>> articleOptions,
             //Greet.Greeter.GreeterClient client,
             IJwtService userService,
+            ISearcher search,
             RedisService redis)
         {
+            _searcher = search;
             //_client = client;
             _userService = userService;
             _tagHelperManager = tagHelper;
@@ -60,6 +63,14 @@ namespace TTCore.StoreProvider.Controllers
             }
 
             return this.View2();
+        }
+
+        [HttpGet("/fetch")]
+        public string fetch(string url)
+        {
+            string s = string.Empty;
+            s = _searcher.Test(url);
+            return s;
         }
 
         [HttpGet("/grpc")]

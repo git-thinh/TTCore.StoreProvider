@@ -24,6 +24,7 @@ Google.Protobuf
 Grpc.Core
 Grpc.Tools
 
+Microsoft.ClearScript.V8.Native.win-x64
 ---------------------------------------------
 
 * If you get the error ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY in Chrome, 

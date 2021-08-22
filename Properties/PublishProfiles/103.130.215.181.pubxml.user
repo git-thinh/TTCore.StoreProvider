@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAiaHAMzuWc0y5V4Y+pqihjgAAAAACAAAAAAAQZgAAAAEAACAAAABPjFPIGbQIoNU8eQBoIllrOb/CYfoCgWb5ETs1FmSYMwAAAAAOgAAAAAIAACAAAAA9Logihq0OFGjCGmNvNAiQcGKYfR21wkJljszlPTVKSjAAAACS7DcQevcGMj6uSOtqC6c919aFQkj+8h+EwIPSDAvHnq99pNwxnW3+zsYcSCLBhQFAAAAAV53IBu7fnN+/7MmmBLxmgx9jRGi2gGxt/yOmnuP/LFVavQ7KCuyIA/EEOqVztp0XRBNlWxAQ175KFRa3Obh+oA==</EncryptedPassword>
+    <History>True|2021-08-22T05:23:54.4301326Z;False|2021-08-22T12:23:02.6710156+07:00;True|2021-08-22T12:21:00.6521349+07:00;False|2021-08-22T12:19:57.6922434+07:00;True|2021-08-22T12:15:10.3476203+07:00;False|2021-08-22T12:13:39.4550145+07:00;</History>
+    <_PublishTargetUrl>ftp://103.130.215.181/TTCore.StoreProvider</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>08/12/2021 10:57:50</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>08/21/2021 10:17:20</publishTime>
+    </File>
+    <File Include="bundleconfig.json">
+      <publishTime>08/14/2021 07:29:57</publishTime>
+    </File>
+    <File Include="ClearScript.Core.dll">
+      <publishTime>07/22/2021 21:53:14</publishTime>
+    </File>
+    <File Include="ClearScript.V8.dll">
+      <publishTime>07/22/2021 21:53:46</publishTime>
+    </File>
+    <File Include="Dapper.dll">
+      <publishTime>04/29/2021 18:23:04</publishTime>
+    </File>
+    <File Include="Google.Protobuf.dll">
+      <publishTime>06/08/2021 14:28:10</publishTime>
+    </File>
+    <File Include="Grpc.Core.Api.dll">
+      <publishTime>08/13/2021 18:24:38</publishTime>
+    </File>
+    <File Include="Grpc.Core.dll">
+      <publishTime>08/13/2021 18:24:34</publishTime>
+    </File>
+    <File Include="HtmlAgilityPack.Core.dll">
+      <publishTime>08/22/2021 12:19:05</publishTime>
+    </File>
+    <File Include="HtmlAgilityPack.Core.pdb">
+      <publishTime>08/22/2021 12:19:05</publishTime>
+    </File>
+    <File Include="libwebp_x64.dll">
+      <publishTime>12/12/2019 03:31:43</publishTime>
+    </File>
+    <File Include="libwebp_x86.dll">
+      <publishTime>12/12/2019 03:31:43</publishTime>
+    </File>
+    <File Include="MessagePack.Annotations.dll">
+      <publishTime>10/02/2020 21:33:36</publishTime>
+    </File>
+    <File Include="MessagePack.dll">
+      <publishTime>02/10/2020 21:33:52</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
+      <publishTime>07/16/2021 01:10:52</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Connections.Abstractions.dll">
+      <publishTime>07/16/2021 01:09:58</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Http.Features.dll">
+      <publishTime>07/16/2021 01:08:50</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.JsonPatch.dll">
+      <publishTime>05/13/2019 14:51:12</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Mvc.Razor.Extensions.dll">
+      <publishTime>05/13/2019 14:51:09</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.Razor.Language.dll">
+      <publishTime>05/13/2019 14:51:08</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.SignalR.Common.dll">
+      <publishTime>07/16/2021 01:10:38</publishTime>
+    </File>
+    <File Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack.dll">
+      <publishTime>07/16/2021 01:10:36</publishTime>
+    </File>
+    <File Include="Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>09/13/2019 09:28:44</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>09/11/2019 20:26:18</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.dll">
+      <publishTime>09/11/2019 20:26:16</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.Razor.dll">
+      <publishTime>05/13/2019 14:51:08</publishTime>
+    </File>
+    <File Include="Microsoft.DotNet.PlatformAbstractions.dll">
+      <publishTime>09/11/2019 20:26:17</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Abstractions.dll">
+      <publishTime>07/15/2021 16:53:18</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.dll">
+      <publishTime>07/15/2021 16:53:34</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.InMemory.dll">
+      <publishTime>07/15/2021 16:53:40</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.DependencyInjection.dll">
+      <publishTime>06/16/2021 02:12:46</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.DependencyModel.dll">
+      <publishTime>09/11/2019 20:26:17</publishTime>
+    </File>
+    <File Include="Microsoft.Extensions.Primitives.dll">
+      <publishTime>03/17/2021 05:42:46</publishTime>
+    </File>
+    <File Include="Microsoft.IdentityModel.JsonWebTokens.dll">
+      <publishTime>08/21/2021 03:02:32</publishTime>
+    </File>
+    <File Include="Microsoft.IdentityModel.Logging.dll">
+      <publishTime>08/21/2021 03:04:04</publishTime>
+    </File>
+    <File Include="Microsoft.IdentityModel.Protocols.dll">
+      <publishTime>06/30/2020 08:06:48</publishTime>
+    </File>
+    <File Include="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll">
+      <publishTime>06/30/2020 08:13:54</publishTime>
+    </File>
+    <File Include="Microsoft.IdentityModel.Tokens.dll">
+      <publishTime>08/21/2021 03:08:46</publishTime>
+    </File>
+    <File Include="Microsoft.OpenApi.dll">
+      <publishTime>08/30/2020 03:14:12</publishTime>
+    </File>
+    <File Include="Microsoft.Toolkit.dll">
+      <publishTime>08/13/2020 05:29:22</publishTime>
+    </File>
+    <File Include="Microsoft.Toolkit.Parsers.dll">
+      <publishTime>08/13/2020 05:29:28</publishTime>
+    </File>
+    <File Include="Newtonsoft.Json.Bson.dll">
+      <publishTime>09/11/2019 20:26:17</publishTime>
+    </File>
+    <File Include="Newtonsoft.Json.dll">
+      <publishTime>09/11/2019 20:26:17</publishTime>
+    </File>
+    <File Include="nlog.config">
+      <publishTime>08/12/2021 14:03:27</publishTime>
+    </File>
+    <File Include="NLog.dll">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="NLog.Extensions.Logging.dll">
+      <publishTime>06/16/2021 01:58:12</publishTime>
+    </File>
+    <File Include="NLog.Web.AspNetCore.dll">
+      <publishTime>07/15/2021 01:28:52</publishTime>
+    </File>
+    <File Include="Pipelines.Sockets.Unofficial.dll">
+      <publishTime>11/13/2020 17:38:04</publishTime>
+    </File>
+    <File Include="runtimes/linux-arm64/native/libgrpc_csharp_ext.arm64.so">
+      <publishTime>08/13/2021 03:26:48</publishTime>
+    </File>
+    <File Include="runtimes/linux-x64/native/libgrpc_csharp_ext.x64.so">
+      <publishTime>08/13/2021 03:26:48</publishTime>
+    </File>
+    <File Include="runtimes/osx-x64/native/libgrpc_csharp_ext.x64.dylib">
+      <publishTime>08/13/2021 03:26:50</publishTime>
+    </File>
+    <File Include="runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll">
+      <publishTime>02/17/2021 04:59:26</publishTime>
+    </File>
+    <File Include="runtimes/win-x64/native/ClearScriptV8.win-x64.dll">
+      <publishTime>07/22/2021 21:53:26</publishTime>
+    </File>
+    <File Include="runtimes/win-x64/native/grpc_csharp_ext.x64.dll">
+      <publishTime>08/13/2021 18:24:34</publishTime>
+    </File>
+    <File Include="runtimes/win-x86/native/grpc_csharp_ext.x86.dll">
+      <publishTime>08/13/2021 18:24:34</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netcoreapp2.0/System.Diagnostics.PerformanceCounter.dll">
+      <publishTime>10/20/2020 01:52:34</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll">
+      <publishTime>02/17/2021 05:00:24</publishTime>
+    </File>
+    <File Include="runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll">
+      <publishTime>10/20/2020 01:49:30</publishTime>
+    </File>
+    <File Include="StackExchange.Redis.dll">
+      <publishTime>07/01/2021 14:33:28</publishTime>
+    </File>
+    <File Include="Swashbuckle.AspNetCore.Swagger.dll">
+      <publishTime>08/02/2021 16:35:00</publishTime>
+    </File>
+    <File Include="Swashbuckle.AspNetCore.SwaggerGen.dll">
+      <publishTime>08/02/2021 16:35:04</publishTime>
+    </File>
+    <File Include="Swashbuckle.AspNetCore.SwaggerUI.dll">
+      <publishTime>08/02/2021 16:35:16</publishTime>
+    </File>
+    <File Include="System.Configuration.ConfigurationManager.dll">
+      <publishTime>10/20/2020 01:52:30</publishTime>
+    </File>
+    <File Include="System.Diagnostics.DiagnosticSource.dll">
+      <publishTime>12/12/2020 09:40:42</publishTime>
+    </File>
+    <File Include="System.Diagnostics.PerformanceCounter.dll">
+      <publishTime>10/20/2020 01:50:20</publishTime>
+    </File>
+    <File Include="System.Drawing.Common.dll">
+      <publishTime>02/17/2021 05:00:12</publishTime>
+    </File>
+    <File Include="System.IdentityModel.Tokens.Jwt.dll">
+      <publishTime>08/21/2021 03:01:12</publishTime>
+    </File>
+    <File Include="System.IO.Pipelines.dll">
+      <publishTime>11/26/2020 09:01:10</publishTime>
+    </File>
+    <File Include="System.Net.WebSockets.WebSocketProtocol.dll">
+      <publishTime>09/11/2019 20:26:16</publishTime>
+    </File>
+    <File Include="System.Security.Cryptography.ProtectedData.dll">
+      <publishTime>10/20/2020 01:52:26</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.deps.json">
+      <publishTime>08/22/2021 12:23:21</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.dll">
+      <publishTime>08/22/2021 12:23:19</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.exe">
+      <publishTime>08/22/2021 12:23:19</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.pdb">
+      <publishTime>08/22/2021 12:23:19</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.runtimeconfig.json">
+      <publishTime>08/22/2021 12:19:07</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.Views.dll">
+      <publishTime>08/22/2021 12:23:20</publishTime>
+    </File>
+    <File Include="TTCore.StoreProvider.Views.pdb">
+      <publishTime>08/22/2021 12:23:20</publishTime>
+    </File>
+    <File Include="TTCore.WebPImage.dll">
+      <publishTime>08/22/2021 12:19:05</publishTime>
+    </File>
+    <File Include="TTCore.WebPImage.pdb">
+      <publishTime>08/22/2021 12:19:05</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>08/22/2021 12:23:21</publishTime>
+    </File>
+    <File Include="wwwroot/images/banner1.svg">
+      <publishTime>07/23/2021 02:38:47</publishTime>
+    </File>
+    <File Include="wwwroot/images/banner2.svg">
+      <publishTime>07/23/2021 02:38:47</publishTime>
+    </File>
+    <File Include="wwwroot/images/banner3.svg">
+      <publishTime>07/23/2021 02:38:47</publishTime>
+    </File>
+    <File Include="wwwroot/index.html">
+      <publishTime>08/13/2021 04:19:27</publishTime>
+    </File>
+    <File Include="wwwroot/json/article.json">
+      <publishTime>08/19/2021 08:23:30</publishTime>
+    </File>
+    <File Include="wwwroot/json/user.json">
+      <publishTime>08/19/2021 08:12:02</publishTime>
+    </File>
+    <File Include="wwwroot/test/chat.html">
+      <publishTime>08/13/2021 20:09:21</publishTime>
+    </File>
+    <File Include="wwwroot/test/clock.html">
+      <publishTime>08/13/2021 08:41:06</publishTime>
+    </File>
+    <File Include="wwwroot/test/upload.html">
+      <publishTime>08/13/2021 13:30:02</publishTime>
+    </File>
+    <File Include="wwwroot/test/ws.html">
+      <publishTime>08/13/2021 04:24:03</publishTime>
+    </File>
+    <File Include="wwwroot/test/_SwaggerUI.html">
+      <publishTime>08/13/2021 09:38:41</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

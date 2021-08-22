@@ -29,7 +29,8 @@ namespace TTCore.StoreProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHostedService<GrpcService>();
+            //services.AddHostedService<GrpcService>();
+            services.AddSingleton<ISearcher, ScriptV8Service>();
 
             //AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", false);
             //services.AddGrpc(o => { });

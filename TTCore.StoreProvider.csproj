@@ -59,6 +59,7 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="5.0.9" />
     <PackageReference Include="Microsoft.ClearScript.V8" Version="7.1.5" />
+    <PackageReference Include="Microsoft.ClearScript.V8.Native.win-x64" Version="7.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.9" />
     <PackageReference Include="Microsoft.Toolkit.Parsers" Version="6.1.1" />
@@ -72,6 +73,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HtmlAgilityPack.Core\HtmlAgilityPack.Core.csproj" />
     <ProjectReference Include="..\TTCore.WebPImage\TTCore.WebPImage.csproj" />
   </ItemGroup>
 
