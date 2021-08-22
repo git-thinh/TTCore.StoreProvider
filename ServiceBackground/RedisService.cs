@@ -73,7 +73,7 @@ namespace TTCore.StoreProvider.ServiceBackground
             stoppingToken.Register(() => _logger.LogInformation($"{ServiceName} background task is stopping."));
 
             // https://redis.io/topics/notifications
-            // $ redis-cli      > config set notify - keyspace - events KEA
+            // $ redis-cli      > config set notify-keyspace-events KEA
             // $ redis-cli--csv > psubscribe '__key*__:*'
 
             var sub = connection.GetSubscriber();

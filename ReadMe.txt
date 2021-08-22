@@ -10,10 +10,12 @@ NLog
 NLog.Web.AspNetCore
 
 StackExchange.Redis
+https://redis.io/topics/notifications
+$ redis-cli      > config set notify-keyspace-events KEA
+$ redis-cli--csv > psubscribe '__key*__:*'
 
 Swashbuckle.AspNetCore.SwaggerGen
 Swashbuckle.AspNetCore.SwaggerUI
-Microsoft.Docs.Samples.RouteInfo
 
 Microsoft.Toolkit.Parsers.Rss
 
@@ -24,6 +26,7 @@ Google.Protobuf
 Grpc.Core
 Grpc.Tools
 
+Microsoft.ClearScript.V8
 Microsoft.ClearScript.V8.Native.win-x64
 ---------------------------------------------
 
